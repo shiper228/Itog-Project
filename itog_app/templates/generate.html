@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %} Generate {% endblock %}
+
+{% block content %}
+<form method="POST" action="/generate/">
+                {% csrf_token %}
+                {{ form }}
+            </form>
+{% endblock %}
