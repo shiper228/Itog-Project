@@ -1,3 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
+class QRimg(models.Model):
+    title = models.CharField(max_length = 50, blank=True)
+    image = models.ImageField(upload_to='media')

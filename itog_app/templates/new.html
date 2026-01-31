@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} New {% endblock %}
+
+{% block content %}
+<img src="{% static 'media/qrcode.png' %}" alt="QR код">
+fetch('data.json')
+  .then(response => response.json())
+  .then(data => console.log(data.variable));
+{% endblock %}
