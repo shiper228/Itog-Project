@@ -42,12 +42,7 @@ class QrCode:
 
 
     def save_qr_to_static(qr_instance):
-        """Сохраняет QR-код из экземпляра класса в папку static"""
         global a
-
-        if not qr_instance.images:
-            print("Нет изображений для сохранения!")
-            return None
 
         static_dir = os.path.join(settings.BASE_DIR, 'static')
         os.makedirs(static_dir, exist_ok=True)
@@ -63,3 +58,4 @@ class QrCode:
 
         print(f"QR-код сохранен в static как: {full_static_path}")
         print(f"data.json сохранен в: {data_json_path}")
+        return a

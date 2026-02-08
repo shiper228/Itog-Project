@@ -17,7 +17,7 @@ def generate_page(request):
             result = qr.save_qr_to_static()
 
             if result:
-                qr_url = f"/static/qr_{result.get('qr_number', 1)}.png"
+                qr_url = f"/static/qr_{result}.png"
 
     return render(request, 'generate.html', {'qr_url': qr_url})
 
