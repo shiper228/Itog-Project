@@ -1,10 +1,78 @@
 {% extends "base.html" %}
-
-{% block title %} Generate {% endblock %}
+{% load static %}
 
 {% block content %}
-<form method="POST" action="/generate/">
-                {% csrf_token %}
-                {{ form }}
-            </form>
+<h2>Генератор QR-кода</h2>
+
+<form method="POST" action="">
+    {% csrf_token %}
+
+    <label for="link">Введите ссылку:</label>
+    <input type="text" id="link" name="link" required>
+
+    <button type="submit">
+        Создать QR-код
+    </button>
+</form>
+
+{% if qr_url %}
+<hr>
+<h3>Ваш QR-код:</h3>
+
+<img src="{{ qr_url }}" alt="QR Code" id="qrImage">
+
+<div>
+    <p>Ссылка: {{ last_link }}</p>
+    <p>Файл: {{ qr_filename }}</p>
+    <p>Номер QR: #{{ qr_number }}</p>
+
+    <div>
+        <a href="{{ qr_url }}" download>
+            Скачать QR-код
+        </a>
+        <button onclick="copyImageLink()">
+            Копировать ссылку
+        </button>
+    </div>
+</div>
+
+<script>
+function copyImageLink() {
+    const qrUrl = "{{ qr_url }}";
+    navigator.clipboard.writeText(qrUrl)
+        .then(() => {
+            alert('Ссылка на QR-код скопирована');
+        })
+        .catch(err => {
+            console.error('Ошибка копирования:', err);
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const qrImage = document.getElementById('qrImage');
+    if (qrImage) {
+        qrImage.src = qrImage.src + '?t=' + new Date().getTime();
+    }
+});
+</script>
+{% endif %}
+
+{% if not qr_url %}
+<div>
+    <h3>Как это работает:</h3>
+    <ol>
+        <li>Введите любую ссылку в поле выше</li>
+        <li>Нажмите кнопку "Создать QR-код"</li>
+        <li>QR-код появится ниже</li>
+    </ol>
+
+    <p>Примеры ссылок:</p>
+    <ul>
+        <li>https://example.com</li>
+        <li>https://google.com</li>
+        <li>https://github.com</li>
+    </ul>
+</div>
+{% endif %}
+
 {% endblock %}
